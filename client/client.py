@@ -1,4 +1,4 @@
-""""
+"""
 Description: A class to manage Client.
 Author: Karanveer
 Date: 12/09/2024
@@ -21,9 +21,9 @@ class Client:
 
         try:
             valid = validate_email(email_address)
-            self._email_address = valid.email
+            self.__email_address = valid.normalized
         except EmailNotValidError:
-            self._email_address = "email@pixell-river.com"
+            self.__email_address = "email@pixell-river.com"
     
     @property
     def client_number(self):
@@ -42,4 +42,4 @@ class Client:
         return self.__email_address
     
     def __str__(self):
-        return f"{self._last_name}, {self._first_name} [{self._client_number}] - {self._email_address}"
+        return f"{self.__last_name}, {self.__first_name} [{self.__client_number}] - {self.__email_address}"
