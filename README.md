@@ -11,4 +11,4 @@ Karanveer Singh
 Assignment 1: Bank Account and Client Management
 
 ## Encapsulation
-[use this section to explain how Encapsulation was achieved in the BankAccount and Transaction classes.]
+Encapsulation in the BankAccount and Transaction classes is achieved by using private attributes and providing public methods like deposit() and withdraw() to interact with them. This ensures data is validated and protected from direct modification.
