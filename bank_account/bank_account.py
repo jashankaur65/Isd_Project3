@@ -3,9 +3,10 @@ Description: A class to manage Client.
 Author: Karanveer
 Date: 13/09/2024
 """
+from datetime import date
 
 class BankAccount:
-    def __init__(self, account_number, client_number, balance = 0.0):
+    def __init__(self, account_number:int, client_number:int, balance:0.0, date_created:date):
         if not isinstance(account_number, int):
             raise ValueError("Account number must be an integer.")
         self.__account_number = account_number
@@ -19,6 +20,12 @@ class BankAccount:
         except ValueError:
             self.__balance = 0.0
 
+        if date_created is None:
+            self.__date_created = date.today()
+        elif isinstance(date_created, date):
+            self.__date_created = date_created
+        else:
+            raise ValueError("date created must be an instance of datetime.date")
     @property
     def account_number(self):
         return self.__account_number
