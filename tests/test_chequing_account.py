@@ -8,7 +8,7 @@ from bank_account.chequing_account import ChequingAccount
 from datetime import date
 
 class TestChequingAccount(unittest.TestCase):
-    """
+    """            
     Unit test for the ChequingAccount class
     """
 
