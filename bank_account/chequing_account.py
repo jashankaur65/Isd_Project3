@@ -12,7 +12,7 @@ class ChequingAccount(BankAccount):
     """
     BASE_SERVICE_CHARGE = 0.50
 
-    def __init__(self, account_number : int, client_number : int, balance = 0.0, date_created = date, overdraft_limit = float, overdraft_rate = float):
+    def __init__(self, account_number : int, client_number : int, balance: float = 0.0, date_created: date = None, overdraft_limit: float = -100.0, overdraft_rate: float = 0.05):
         super().__init__(account_number, client_number, balance, date_created)
 
         # Initializing overdraft limit
@@ -43,3 +43,12 @@ class ChequingAccount(BankAccount):
         else:
             overdraft_penalty = (self.__overdraft_limit - self.balance) * self.__overdraft_rate
             return ChequingAccount.BASE_SERVICE_CHARGE + overdraft_penalty
+        
+    def withdraw(self, amount):
+        """
+        Withdraws an amount, ensuring it doesn't exceed the overdraft limit.
+        """
+
+        if self.balance - amount < self.__overdraft_limit:
+            raise ValueError("Withdrawal exceeds overdraft limit.")
+        super().withdraw(amount)

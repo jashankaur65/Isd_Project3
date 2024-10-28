@@ -10,6 +10,7 @@ Karanveer Singh
 
 Assignment 1: Bank Account and Client Management
 Assignment 2: Abstraction, Inheritance and Polymorphism
+Assignment 3: The Strategy Pattern is used to encapsulate the logic for calculating service charges into different strategy classes (Overdraft, Management Fee, and Minimum Balance). This allows for flexibility in applying different rules without modifying the core account classes.
 
 ## Encapsulation
 
