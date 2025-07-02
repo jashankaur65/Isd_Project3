@@ -1,51 +1,39 @@
-"""
-Description: A class to manage InvestmentAccount.
-Author: Karanveer
-"""
-
 from bank_account.bank_account import BankAccount
 from datetime import date, timedelta
-from abc import ABC, abstractmethod
+from patterns.observer.subject import Subject  # Adjust import path as needed
 
-class InvestmentAccount(BankAccount):
-    TEN_YEARS_AGO = date.today() - timedelta(days=10*365.25)
+class InvestmentAccount(BankAccount, Subject):
+    TEN_YEARS_AGO = date.today() - timedelta(days=int(10 * 365.25))
 
     def __init__(self, account_number: int, client_number: int, balance: float = 0.0, 
                  management_fee: float = 2.55, date_created: date = None):
-        # Use super() to initialize the base BankAccount class
-        super().__init__(account_number, client_number, balance, date_created)
+        BankAccount.__init__(self, account_number, client_number, balance, date_created)
+        Subject.__init__(self)
 
-        # Validate and set management fee
-        self.__management_fee = self._validate_float(management_fee, 2.55)
+        try:
+            self.__management_fee = float(management_fee)
+        except (ValueError, TypeError):
+            self.__management_fee = 2.55
+
+    def get_service_charges(self):
+        if self.date_created < InvestmentAccount.TEN_YEARS_AGO:
+            # Management fee waived for accounts older than 10 years
+            return BankAccount.BASE_SERVICE_CHARGE
+        else:
+            return BankAccount.BASE_SERVICE_CHARGE + self.__management_fee
+
+    def deposit(self, amount):
+        super().deposit(amount)
+        self.notify(f"Deposit of {self.format_currency(amount)} made. New balance: {self.format_currency(self.balance)}")
+
+    def withdraw(self, amount):
+        super().withdraw(amount)
+        self.notify(f"Withdrawal of {self.format_currency(amount)} made. New balance: {self.format_currency(self.balance)}")
 
     def __str__(self):
-        """
-        Returns a string representation of the InvestmentAccount object, 
-        including account number, balance, and management fee status.
-        """
-        management_fee_str = "Waived" if self.date_created <= InvestmentAccount.TEN_YEARS_AGO \
-            else self.format_currency(self.__management_fee)
-
+        management_fee_str = "Waived" if self.date_created < InvestmentAccount.TEN_YEARS_AGO else self.format_currency(self.__management_fee)
         return (f"Account Number: {self.account_number}\n"
                 f"Balance: {self.format_currency(self.balance)}\n"
                 f"Date Created: {self.date_created}\n"
                 f"Management Fee: {management_fee_str}\n"
                 f"Account Type: Investment")
-
-    def get_service_charges(self):
-        """
-        Calculates the total service charges, considering the management fee status.
-        """
-        if self.date_created <= InvestmentAccount.TEN_YEARS_AGO:
-            return BankAccount.BASE_SERVICE_CHARGE
-        else:
-            return BankAccount.BASE_SERVICE_CHARGE + self.__management_fee
-
-    @abstractmethod
-    def _validate_float(self, value, default_value):
-        """
-        Validates if the given value can be converted to a float, otherwise returns the default value.
-        """
-        if isinstance(value, float):
-            return value
-        return default_value

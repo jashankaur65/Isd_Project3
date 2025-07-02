@@ -1,10 +1,4 @@
-""""
-Description: A client program written to verify correctness of 
-the BankAccount and Transaction classes.
-Author: ACE Faculty
-Edited by: Karanveer
-Date: 14/09/2024
-"""
+
 from bank_account.bank_account import BankAccount
 from client.client import Client
 

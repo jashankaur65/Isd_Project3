@@ -3,11 +3,13 @@ class Subject:
         self._observers = []
 
     def attach(self, observer):
-        self._observers.append(observer)
+        if observer not in self._observers:
+            self._observers.append(observer)
 
     def detach(self, observer):
-        self._observers.remove(observer)
-    
+        if observer in self._observers:
+            self._observers.remove(observer)
+
     def notify(self, message):
         for observer in self._observers:
-            observer.update(message)
+            observer.update(self, message)

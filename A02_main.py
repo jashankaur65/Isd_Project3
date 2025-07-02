@@ -1,10 +1,4 @@
-"""
-Description: A client program written to verify correctness of 
-the BankAccount sub classes.
-Author: ACE Faculty
-Edited by: Karanveer
-Date: 10/05/2024
-"""
+
 
 # 1.  Import all BankAccount types using the bank_account package
 #     Import date from datetime

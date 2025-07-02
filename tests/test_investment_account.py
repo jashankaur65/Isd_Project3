@@ -1,7 +1,4 @@
-"""
-Description: Unit tests for the InvestmentAccount class.
-Author: Karanveer
-"""
+
 
 from datetime import date, timedelta
 from bank_account.investment_account import InvestmentAccount

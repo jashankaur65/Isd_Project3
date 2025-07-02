@@ -1,57 +1,85 @@
 """
-Description: A client program written to verify implementation 
-of the Observer Pattern.
-Author: ACE Faculty
-Edited by: {Student Name}
-Date: {Date}
+A03_main.py
+Demonstrates the Observer Pattern with various BankAccount types.
 """
 
-# 1.  Import all BankAccount types using the bank_account package
-#     Import date
-#     Import Client
+from datetime import date
+from bank_account.chequing_account import ChequingAccount
+from bank_account.savings_account import SavingsAccount
+from client.client import Client
 
+# 1. Create Client 1
+client1 = Client(1001, "Alice", "Smith", "alice.smith@example.com")
 
+# 2. Create Chequing and Savings accounts for Client 1
+chequing_account = ChequingAccount(2001, client1.client_number, 1000.00)
+savings_account = SavingsAccount(2002, client1.client_number, 2000.00, 50.00)
 
+# 3. Attach Client 1 as an observer to both accounts
+chequing_account.attach(client1)
+savings_account.attach(client1)
 
+# 4. Create Client 2 and a SavingsAccount
+client2 = Client(1002, "Bob", "Jones", "bob.jones@example.com")
+savings_account2 = SavingsAccount(2003, client2.client_number, 2000.00, 50.00)
+savings_account2.attach(client2)
 
+# 5. Perform Transactions on ChequingAccount
+print("\n--- Transactions on ChequingAccount ---")
+try:
+    chequing_account.deposit(500.00)
+    print("Deposit of $500 completed.")
+except Exception as e:
+    print(f"Error during deposit: {e}")
 
-# 2. Create a Client object with data of your choice.
+try:
+    chequing_account.withdraw(100.00)
+    print("Withdrawal of $100 completed.")
+except Exception as e:
+    print(f"Error during withdrawal: {e}")
 
+try:
+    chequing_account.withdraw(2000.00)
+    print("Withdrawal of $2000 completed.")
+except Exception as e:
+    print(f"Error during withdrawal: {e}")
 
+# 6. Perform Transactions on SavingsAccount
+print("\n--- Transactions on SavingsAccount ---")
+try:
+    savings_account.withdraw(500.00)
+    print("Withdrawal of $500 completed.")
+except Exception as e:
+    print(f"Error during withdrawal: {e}")
 
+try:
+    savings_account.deposit(200.00)
+    print("Deposit of $200 completed.")
+except Exception as e:
+    print(f"Error during deposit: {e}")
 
-# 3a. Create a ChequingAccount object with data of your choice, using the client_number 
-# of the client created in step 2.
-# 3b. Create a SavingsAccount object with data of your choice, using the client_number 
-# of the client created in step 2.
+try:
+    savings_account.withdraw(10000.00)
+    print("Withdrawal of $10000 completed.")
+except Exception as e:
+    print(f"Error during withdrawal: {e}")
 
+# 7. Perform Transactions on SavingsAccount 2 (Bob’s account)
+print("\n--- Transactions on Bob's SavingsAccount ---")
+try:
+    savings_account2.deposit(300.00)
+    print("Deposit of $300 completed.")
+except Exception as e:
+    print(f"Error during deposit: {e}")
 
+try:
+    savings_account2.withdraw(100.00)
+    print("Withdrawal of $100 completed.")
+except Exception as e:
+    print(f"Error during withdrawal: {e}")
 
-
-
-# 4 The ChequingAccount and SavingsAccount objects are 'Subject' objects.
-# The Client object is an 'Observer' object.  
-# 4a.  Attach the Client object (created in step 1) to the ChequingAccount object (created in step 2).
-# 4a.  Attach the Client object (created in step 1) to the SavingsAccount object (created in step 2).
-
-
-
-
-
-# 5a. Create a second Client object with data of your choice.
-# 5b. Create a SavingsAccount object with data of your choice, using the client_number 
-# of the client created in this step.
-
-
-
-
-# 6. Use the ChequingAccount and SavingsAccount objects created 
-# in steps 3 and 5 above to perform transactions (deposits and withdraws) 
-# which would cause the Subject (BankAccount) to notify the Observer 
-# (Client) as well as transactions that would not 
-# cause the Subject to notify the Observer.  Ensure each 
-# BankAccount object performs at least 3 transactions.
-# REMINDER: the deposit() and withdraw() methods can raise exceptions
-# ensure the methods are invoked using proper exception handling such 
-# that any exception messages are printed to the console.
-
+try:
+    savings_account2.withdraw(5000.00)
+    print("Withdrawal of $5000 completed.")
+except Exception as e:
+    print(f"Error during withdrawal: {e}")
